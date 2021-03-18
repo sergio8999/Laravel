@@ -15,9 +15,17 @@ use Illuminate\Support\Facades\Route;
 
 // index
 Route::get('/', function () {
-    return view('welcome');
+    return view('layout');
 });
 
+$about =[
+    ['name'=>""],
+    ['name'=>"C/ Pasaje"],
+    ['name'=>'111']
+];
+
+Route::view('/aboutUs','aboutUs',compact('about'));
+Route::view('/contactUs','contactUs');
 
 // For forms you can use the post method by get
 /* Route::get('product',function(){
@@ -45,8 +53,12 @@ Route::any('product', function () {
 
 Route::get('/user/{id?}',function($id="Juan"){
     return 'The user is ' . $id;
-});
+})->name('user');  //Named path
 
+
+Route::get('name',function(){
+    return redirect()->route('user');
+});
 
 Route::get('/user/{id}/profile/{name}', function ($id, $name) {
     return "The user " . $id . " is " . $name;
@@ -57,3 +69,11 @@ Route::get('/user/{id}/profile/{name}', function ($id, $name) {
 Route::get('/ticket/{id?}', function ($id=1) {
     return "The ticket number is " . $id;
 })->where('id', '[0-9]+');
+
+Route::get('category',function(){
+   /*  return view('category',['name' => 'Multimedia']); */
+
+   /* Another way */
+   return view('category')
+              ->with('name','Multimedia');
+});
